@@ -2,7 +2,8 @@ package cpc.uv.copsboot.user;
 
 import org.springframework.data.repository.CrudRepository;
 
-import java.util.UUID;
+import java.util.Optional;
 
 public interface UserRepository extends CrudRepository<User, UserId>, UserRepositoryCustom {
+    Optional<User> findByAuthServerId(AuthServerId authServerId);
 }

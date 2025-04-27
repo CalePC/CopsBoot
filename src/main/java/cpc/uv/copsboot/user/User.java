@@ -1,45 +1,36 @@
 package cpc.uv.copsboot.user;
 
 import cpc.uv.orm.jpa.AbstractEntity;
-import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
-
-import java.util.Set;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "copsboot_user")
 public class User extends AbstractEntity<UserId> {
 
-    private String name;
     private String email;
-    private String password;
+    private AuthServerId authServerId;
+    private String mobileToken;
 
-    @ElementCollection(fetch = FetchType.EAGER)
-    @Enumerated(EnumType.STRING)
-    @NotNull
-    private Set<UserRole> roles;
+    protected User() {
+    }
 
-    protected User() {}
-
-    public User(UserId id, String name, String email, String password, Set<UserRole> roles) {
+    public User(UserId id, String email, AuthServerId authServerId, String mobileToken) {
         super(id);
-        this.name = name;
         this.email = email;
-        this.password = password;
-        this.roles = roles;
+        this.authServerId = authServerId;
+        this.mobileToken = mobileToken;
     }
 
-    public String getName() {
-        return name;
-    }
-    public String getEmail(){
+    public String getEmail() {
         return email;
     }
-    public String getPassword() {
-        return password;
-    }
-    public Set<UserRole> getRoles() {
-        return roles;
+
+    public AuthServerId getAuthServerId() {
+        return authServerId;
     }
 
+    public String getMobileToken() {
+        return mobileToken;
+    }
 }
