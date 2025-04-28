@@ -9,7 +9,7 @@ public class AuthServerIdAttributeConverter implements AttributeConverter<AuthSe
 
     @Override
     public UUID convertToDatabaseColumn(AuthServerId attribute) {
-        return attribute.getValue();
+        return attribute.value();
     }
 
     @Override

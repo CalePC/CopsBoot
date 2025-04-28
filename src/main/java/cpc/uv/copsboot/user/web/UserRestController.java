@@ -1,13 +1,15 @@
 package cpc.uv.copsboot.user.web;
 
 import cpc.uv.copsboot.user.AuthServerId;
+import cpc.uv.copsboot.user.CreateUserParameters;
 import cpc.uv.copsboot.user.User;
 import cpc.uv.copsboot.user.UserService;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.security.access.prepost.PreAuthorize;
+
 
 import java.util.HashMap;
 import java.util.Map;
@@ -36,5 +38,15 @@ public class UserRestController {
         result.put("claims", jwt.getClaims());
 
         return result;
+    }
+
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    @PreAuthorize("hasRole('OFFICER')")
+    public UserDto createUser(@AuthenticationPrincipal Jwt jwt,
+                              @RequestBody CreateUserRequest request) {
+        CreateUserParameters parameters = request.toParameters(jwt);
+        User user = userService.createUser(parameters);
+        return UserDto.fromUser(user);
     }
 }

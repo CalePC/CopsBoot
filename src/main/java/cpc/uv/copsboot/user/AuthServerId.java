@@ -1,20 +1,9 @@
 package cpc.uv.copsboot.user;
 
-import jakarta.persistence.Embeddable;
 import org.springframework.util.Assert;
 import java.util.UUID;
-
-@Embeddable
-public class AuthServerId {
-
-    private UUID value;
-
-    protected AuthServerId() {}
-
-    public AuthServerId(UUID value) {
+public record AuthServerId(UUID value) {
+    public AuthServerId {
         Assert.notNull(value, "The AuthServerId value should not be null");
-    }
-    public UUID getValue() {
-        return value;
     }
 }
